@@ -3,9 +3,6 @@ inputformatter
 
 A formatter for web form input fields - can be used as an extension for validator.js or as stand-alone tool.
 
-Over the next couple of days I ought to have the initial code commit for this repository. Until then, check out my JavaScript form validator: https://github.com/mosbymc/validator
+I am still working on creating the basic formatter for the initial commit. Until then, check out my JavaScript form validator: https://github.com/mosbymc/validator
 
 The formatter was originally concieved to be a part of the validator itself, but due to the additional size and the amount of work required, it is now a stand-alone tool that can be used with or without validator.js
-
-
-10/13 - Still waiting on my awesome cable company to actually activate the internet at my new apartment; wouldn't think it would be that difficult, but then I strive for high quality customer service. Once it is up and running I'll being committing to this repo.
