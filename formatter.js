@@ -38,50 +38,56 @@ phone number = ({{###}}) {{###}}-{{####}} = /({{\d\d\d}}) {{\d\d\d}}-{{\d\d\d\d}
 var formatter = function() {
 	this.init = function() {
 		$(document).on("keypress", "input", function(event) {   //Bind event listener for the keypress event on an input.
-            var target = event.currentTarget;
-            var key = String.fromCharCode(event.keyCode);
-            if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
-                var formatOptions = {
-                    input: $(target),							//The input that is being formatted
-                    key: key,									//The value of the key that was entered
-                    format: $(target).data("inputformat")		//The format supplied in the data-inputformat attribute of the DOM element
-                };
-                verifyChar(formatOptions, event);
-            }
-        });
+	            var target = event.currentTarget;
+	            var key = String.fromCharCode(event.keyCode);
+	            if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
+	                var formatOptions = {
+	                    input: $(target),							//The input that is being formatted
+	                    key: key,									//The value of the key that was entered
+	                    format: $(target).data("inputformat")		//The format supplied in the data-inputformat attribute of the DOM element
+	                };
+	                verifyChar(formatOptions, event);
+	            }
+	        });
 	}
 
 	var verifyChar = function(options, event) {
 		var patternArray = buildPatternArray(options.format);
 		var newUserVal = insertKey(options);	//value the user wants to have with the current key inserted into the correct position in the existing string - takes into account a highlight-replace operation
-		var formattedVal = stringBuilder(newUserVal, patternArray);
+		var cleanedInput = newUserVal.length > 1 ? stripFormatting(patternArray, newUserVal) : newUserVal;
+		var formattedVal = stringBuilder(cleanedInput, patternArray);
 
 		options.input.val(formattedVal);
-		event.preventDefault();	//Don't allow the currently event to go through - prevents the character from appearing twice in the case of acceptable chars and once in the case on unacceptable chars
+		event.preventDefault();	//Don't allow the current event to go through - prevents the character from appearing twice in the case of acceptable chars and once in the case on unacceptable chars
 	};
 
 	var stringBuilder = function(inputVal, stringPattern) {		//Builds out the string that will be placed in the input
-		var charCount = 0;
-		var formattedString = "";
+		var charCount = 0;			//where the loop is at in the input value
+		var formattedString = "";	//return value after formatting is added
+		var lastFailed = false;		//used to flag if the last attempted character was not added - we don't want to add more trailing formatting characters if it did
+
 		for (var i = 0; i < stringPattern.length; i++) {
 			if (charCount >= inputVal.length && stringPattern[i].type !== "format") {
-				break;
+				break;	//get out of loop, we're done
 			}
-			else if (charCount >= inputVal.length && stringPattern[i].type === "format" && formattedString.length === i) {
-				formattedString += stringPattern[i].value;
+			else if (charCount >= inputVal.length && stringPattern[i].type === "format" && formattedString.length <= i && !lastFailed) {
+				formattedString += stringPattern[i].value;		//add trailing format characters
 			}
 			while (charCount < inputVal.length) {
 				if (stringPattern[i].type === "format") {	//If the current type is a "format", go ahead and add it to the string
 					formattedString += stringPattern[i].value;
+					lastFailed = false;
 					break;				
 				}
 				else if (stringPattern[i].type === "input" && validChar(i, stringPattern, charCount, inputVal)) {	//If the current type is an "input" and the current inputVal is a valid character, add it to the string
 					formattedString += inputVal[charCount];
 					charCount++;
+					lastFailed = false;
 					break;
 				}
 				else if (stringPattern[i].type === "input" && !validChar(i, stringPattern, charCount, inputVal)) {	//If the current type is an "input" and the current inputVal is not a valid character, remove it from the input string
 					charCount++;
+					lastFailed = true;
 					//var tempString = inputVal.substring(0, charCount) + inputVal.substring(charCount+1);
 					//inputVal = tempString;
 				}
@@ -93,7 +99,7 @@ var formatter = function() {
 	var validChar = function(patternIndex, stringPattern, inputIndex, inputVal) {
 		var regexVal = new RegExp(getRegexVal(stringPattern[patternIndex].value));
 		var testChar = inputVal[inputIndex];
-		return regexVal.test(testChar);		//return true/false based on the test result
+		return regexVal.test(testChar, "i");		//return true/false based on the test result
 	};
 
 	var buildPatternArray = function(formatString) {	//Builds out an array using the format provided in the data-inputformat attribute of the DOM element
@@ -101,7 +107,7 @@ var formatter = function() {
 		var tempPattern = "";
 		var tempForm = "";
 
-		for (var i = 0; i < formatString.length-1; i++) {
+		for (var i = 0; i < formatString.length; i++) {
 			if (formatString[i] === "{" && formatString[i+1] === "{") {
 				for (var j = i+2; j < formatString.length-1; j++) {
 					if (formatString[j] === "}" && formatString[j+1] === "}") {
@@ -127,16 +133,20 @@ var formatter = function() {
 		return matcher;
 	};
 
-	var getRegexVal = function(format) {	//returns the regex value given a specific character as defined in the data-inputformat attribute
+	var getRegexVal = function(format) {	//returns the regex value given a specific character as defined in the data-inputformat attributes
 		switch (format) {
 			case "#":
 				return "\\d";			//any digit
-			case "0":
-				return "\\d?";			//zero or one digit
+			case "d":
+				return "\\D";			//any non-digit character
 			case "Z":
 				return "[a-z,A-Z]";		//any upper or lower case character
 			case "a":
-				return "[a-z,A-Z]?";	//zero or one upper or lower case character
+				return "\\w";			//any word character
+			case "@":
+				return "\\W";			//any non-word character
+			case "s":
+				return "\\S";			//any non-whitespace character
 			case "*":
 				return ".";				//any character at all - wildcard
 			default:
@@ -149,6 +159,25 @@ var formatter = function() {
 		var val = options.input.val().substring(0, loc.start) + options.key + options.input.val().substring(loc.end, options.input.val().length);
 		return val;
 	};
+	
+	var stripFormatting = function(formatString, fieldVal) {
+		var strippedVal = "";
+		var count = 0;
+		var numChars = fieldVal.length;
+		var index = 0;
+
+		for (var i = 0; i < formatString.length; i++) {
+			if (formatString[i].type === "input") {
+				strippedVal += fieldVal.substr(i, 1);
+				index++;
+			}
+			if (index === fieldVal.length) {
+				break;
+			}
+		}
+		return strippedVal;
+	};
+
 
 	var getInputSelection = function(el) {		//Finds the cursor position in the input string - includes highlighted ranges.
 	    var start = 0, end = 0, normalizedValue, range,
