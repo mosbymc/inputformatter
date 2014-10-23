@@ -67,7 +67,10 @@ var formatter = function() {
 			if (charCount >= inputVal.length && stringPattern[i].type !== "format") {
 				break;
 			}
-			while (charCount <= inputVal.length) {
+			else if (charCount >= inputVal.length && stringPattern[i].type === "format" && formattedString.length === i) {
+				formattedString += stringPattern[i].value;
+			}
+			while (charCount < inputVal.length) {
 				if (stringPattern[i].type === "format") {	//If the current type is a "format", go ahead and add it to the string
 					formattedString += stringPattern[i].value;
 					break;				
@@ -78,8 +81,9 @@ var formatter = function() {
 					break;
 				}
 				else if (stringPattern[i].type === "input" && !validChar(i, stringPattern, charCount, inputVal)) {	//If the current type is an "input" and the current inputVal is not a valid character, remove it from the input string
-					var tempString = inputVal.substring(0, charCount) + inputVal.substring(charCount+1);
-					inputVal = tempString;
+					charCount++;
+					//var tempString = inputVal.substring(0, charCount) + inputVal.substring(charCount+1);
+					//inputVal = tempString;
 				}
 			}
 		}
