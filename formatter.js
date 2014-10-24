@@ -39,7 +39,8 @@ var formatter = function() {
 	this.init = function() {
 		$(document).on("keypress", "input", function(event) {   //Bind event listener for the keypress event on an input.
 	            var target = event.currentTarget;
-	            var key = String.fromCharCode(event.keyCode);
+	            var code = event.charCode? event.charCode : event.keyCode;
+            	    var key = String.fromCharCode(code);
 	            if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
 	                var formatOptions = {
 	                    input: $(target),							//The input that is being formatted
