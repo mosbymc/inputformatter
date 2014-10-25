@@ -19,20 +19,20 @@ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR P
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
 
-/*
 {{user input}}
-any one digit: # = \d
-zero or one digit: 0 = \d?
-any one alphabetic character: Z = [a-z,A-Z]
-zero or one alphabetic character: a = [a-z,A-Z]?
+any digit character: # = \d
+any word character: a = \w
+any alphabetic character: Z = [a-z,A-Z]
+any non-word character:  @ = \W
+any non-digit character: d = \D
+any non-whitespace character: s = \S
 any character: * = .
 
 - need spaces and special characters
 - preferably have one character specifiers
 
-phone number = ({{###}}) {{###}}-{{####}} = /({{\d\d\d}}) {{\d\d\d}}-{{\d\d\d\d}}/
+phone number = ({{###}}) {{###}}-{{####}} = /({{\d\d\d}}) {{\d\d\d}}-{{\d\d\d\d}}
 */
 
 var formatter = function() {
