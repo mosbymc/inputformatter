@@ -43,23 +43,42 @@ var formatter = function() {
             	    var key = String.fromCharCode(code);
 	            if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
 	                var formatOptions = {
-	                    input: $(target),							//The input that is being formatted
-	                    key: key,									//The value of the key that was entered
-	                    format: $(target).data("inputformat")		//The format supplied in the data-inputformat attribute of the DOM element
+	                    input: $(target),					//The input that is being formatted
+	                    key: key,						//The value of the key that was entered
+	                    format: $(target).data("inputformat"),		//The format supplied in the data-inputformat attribute of the DOM element
+	                    event: event
 	                };
-	                verifyChar(formatOptions, event);
+	                verifyChar(formatOptions);
 	            }
+	        });
+	        
+	        $(document).on("paste", "input", function(event){
+	        	$(document).one("keyup", "input", function(event) {	//We only want to listen to the keyup event after a paste event
+	        		var target = event.currentTarget;
+	        		if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
+		                var formatOptions = {
+		                    input: $(target),					//The input that is being formatted
+		                    format: $(target).data("inputformat"),		//The format supplied in the data-inputformat attribute of the DOM element
+		                    event: event
+		                };
+		                var patternArray = buildPatternArray(formatOptions.format);	//builds an array for each value in the supplied format string in the data-inputformat value
+		                formatInput(formatOptions, patternArray, $(target).val());
+		            }
+	        	});
 	        });
 	}
 
-	var verifyChar = function(options, event) {
-		var patternArray = buildPatternArray(options.format);
+	var verifyChar = function(options) {
+		var patternArray = buildPatternArray(options.format);	//builds an array for each value in the supplied format string in the data-inputformat value
 		var newUserVal = insertKey(options);	//value the user wants to have with the current key inserted into the correct position in the existing string - takes into account a highlight-replace operation
-		var cleanedInput = newUserVal.length > 1 ? stripFormatting(patternArray, newUserVal) : newUserVal;
-		var formattedVal = stringBuilder(cleanedInput, patternArray);
-
-		options.input.val(formattedVal);
-		event.preventDefault();	//Don't allow the current event to go through - prevents the character from appearing twice in the case of acceptable chars and once in the case on unacceptable chars
+		var cleanedInput = newUserVal.length > 1 ? stripFormatting(patternArray, newUserVal) : newUserVal;	//cleans the current input of all formatting
+		formatInput(options, patternArray, cleanedInput);
+	};
+	
+	var formatInput = function(options, patternArray, inputVal) {
+		var formattedVal = stringBuilder(inputVal, patternArray);	//inserts formatting characters into the string
+		options.input.val(formattedVal);	//sets the input's new value
+		options.event.preventDefault();		//prevent default action from taking place
 	};
 
 	var stringBuilder = function(inputVal, stringPattern) {		//Builds out the string that will be placed in the input
@@ -89,8 +108,6 @@ var formatter = function() {
 				else if (stringPattern[i].type === "input" && !validChar(i, stringPattern, charCount, inputVal)) {	//If the current type is an "input" and the current inputVal is not a valid character, remove it from the input string
 					charCount++;
 					lastFailed = true;
-					//var tempString = inputVal.substring(0, charCount) + inputVal.substring(charCount+1);
-					//inputVal = tempString;
 				}
 			}
 		}
