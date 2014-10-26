@@ -2,7 +2,7 @@
 	<head>
 		<link rel="stylesheet" href="form.css" />
 		<script src="jquery-1.11.1.js"></script>
-		<script LANGUAGE="javascript" SRC="formatter.js"></script>
+		<script LANGUAGE="javascript" SRC="formatter3.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -10,7 +10,12 @@
 			});
 
 			function getFormat() {
-				var val = formatter().getFormattedInput("({{###}}) {{###}}-{{####}}", "fv1cellNum2");
+				var val = formatter().getFormattedInput("({{###}}) {{###}}-{{####}}", "fv1zip1");
+				alert(val);
+			}
+
+			function removeFormat() {
+				var val = formatter().removeFormatting("fv1homephone");
 				alert(val);
 			}
 		</script>
@@ -54,6 +59,7 @@
 				<dd><input type="text" id="fv1website1"/></dd>
 				<dt><input type="submit" id="fv1groupSubmit" value="Submit" data-form="fieldValidate1"/></dt>
 				<dt><button id="testFormat" onclick="getFormat()"/>Get Format</button></dt>
+				<dt><button id="testNoFormat" onclick="removeFormat()"/>Remove Formatting</button></dt>
 			</dl>
 		</fieldset>
 	</body>
