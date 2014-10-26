@@ -258,6 +258,20 @@ var formatter = function() {
 
 		return stringBuilder(cleanedInput, patternArray);
 	}
+	
+	this.removeFormatting = function(input) {
+		var elem = $("#" + input);
+		var format = elem.data("inputformat");
+		var cleanedString;
+
+		if (format !== undefined) {
+			cleanedString = stripFormatting(buildPatternArray(format), elem.val());
+		}
+		else {
+			cleanedString = elem.val();
+		}
+		return cleanedString;
+	}
 
 	return this;
 }
