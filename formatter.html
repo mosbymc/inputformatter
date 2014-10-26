@@ -1,7 +1,6 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="form.css" />
-		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
 		<script src="jquery-1.11.1.js"></script>
 		<script LANGUAGE="javascript" SRC="formatter.js"></script>
 
@@ -9,6 +8,11 @@
 			$(document).ready(function() {
 				formatter().init();
 			});
+
+			function getFormat() {
+				var val = formatter().getFormattedInput("({{###}}) {{###}}-{{####}}", "fv1cellNum2");
+				alert(val);
+			}
 		</script>
 
 	</head>
@@ -28,28 +32,29 @@
 	    	<legend>Group Validation</legend>
 	      	<dl align='left'>
 	      		<dt><label for='fv1fName'>First Name: </label></dt>
-			<dd><input type='text' id='fv1fName' data-inputformat="{{ZZZ}}- -{{ZZZZZZ}}"/></dd>
-			<dt><label for='fv1lName'>Last Name: </label></dt>
-			<dd><input type='text' id='fv1lName' data-inputformat="{{aaa}}--{{****}}--"/></dd>
-			<dt><label for="fv1homephone">Home Phone: </label></dt>
-			<dd><input type="text" id="fv1homephone" data-inputformat="({{###}}) {{###}}-{{####}}"/></dd>
-			<dt><label for="fv1cellNum2">Cell Phone: </label></dt>
-			<dd><input type="text" id="fv1cellNum2" data-inputformat="{{###}}-{{###}}-{{####}}"/></dd>
+				<dd><input type='text' id='fv1fName' class="formatInput" data-inputformat="{{ZZZ}}- -{{ZZZZZZ}}"/></dd>
+				<dt><label for='fv1lName'>Last Name: </label></dt>
+				<dd><input type='text' id='fv1lName' data-inputformat="{{aaa}}--{{****}}--"/></dd>
+				<dt><label for="fv1homephone">Home Phone: </label></dt>
+				<dd><input type="text" id="fv1homephone" data-inputformat="({{###}}) {{###}}-{{####}}"/></dd>
+				<dt><label for="fv1cellNum2">Cell Phone: </label></dt>
+				<dd><input type="text" id="fv1cellNum2" data-inputformat="{{###}}-{{###}}-{{####}}"/></dd>
 
-			<dt><label for="fv1zip">Zip: </label></dt>
-			<dd><input type="text" id="fv1zip1"/></dd>
-			<dt><label for="fv1email">Email: </label></dt>
-			<dd><input type="text" id="fv1email1"/></dd>
+				<dt><label for="fv1zip">Zip: </label></dt>
+				<dd><input type="text" id="fv1zip1"/></dd>
+				<dt><label for="fv1email">Email: </label></dt>
+				<dd><input type="text" id="fv1email1"/></dd>
 
-			<dt><label for="fv1password">Password: </label></dt>
-			<dd><span class="helptext hideMessage">Password must be at least 8 characters and include both upper and lower case letters and a number.</span>
-				<input type="text" id="fv1password1"/></dd>
-			<dt><label for="fv1date">Date: </label></dt>
-			<dd><input type="text" id="fv1date1"/></dd>
-			<dt><label for="fv1website">Website: </label></dt>
-			<dd><input type="text" id="fv1website1"/></dd>
-			<dt><input type="submit" id="fv1groupSubmit" value="Submit" data-form="fieldValidate1"/></dt>
-		</dl>
+				<dt><label for="fv1password">Password: </label></dt>
+				<dd><span class="helptext hideMessage">Password must be at least 8 characters and include both upper and lower case letters and a number.</span>
+					<input type="text" id="fv1password1"/></dd>
+				<dt><label for="fv1date">Date: </label></dt>
+				<dd><input type="text" id="fv1date1"/></dd>
+				<dt><label for="fv1website">Website: </label></dt>
+				<dd><input type="text" id="fv1website1"/></dd>
+				<dt><input type="submit" id="fv1groupSubmit" value="Submit" data-form="fieldValidate1"/></dt>
+				<dt><button id="testFormat" onclick="getFormat()"/>Get Format</button></dt>
+			</dl>
 		</fieldset>
 	</body>
 </html>
