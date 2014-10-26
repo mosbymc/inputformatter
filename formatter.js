@@ -242,6 +242,22 @@ var formatter = function() {
 	        end: end
 	    };
 	}
+	
+	this.getFormattedInput = function(format, input) {
+		var elem = $("#" + input);
+		var patternArray = buildPatternArray(format);	//builds an array for each value in the supplied format string in the data-inputformat value
+		var curFormat = elem.data("inputformat");
+		var cleanedInput;
+
+		if (curFormat !== undefined) {
+			cleanedInput = elem.val().length > 1 ? stripFormatting(buildPatternArray(curFormat), elem.val()) : elem.val();
+		}
+		else {
+			cleanedInput = elem.val();
+		}
+
+		return stringBuilder(cleanedInput, patternArray);
+	}
 
 	return this;
 }
