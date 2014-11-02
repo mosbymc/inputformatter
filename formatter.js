@@ -41,7 +41,7 @@ var formatter = function() {
 	            var target = event.currentTarget;
 	            var code = event.charCode? event.charCode : event.keyCode;
             	    var key = String.fromCharCode(code);
-	            if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
+	            if ($(target).data("inputformat") !== undefined) {
 	                var formatOptions = {
 	                    input: $(target),					//The input that is being formatted
 	                    key: key,						//The value of the key that was entered
@@ -55,7 +55,7 @@ var formatter = function() {
 	        $(document).on("paste", "input", function(event){
 	        	$(document).one("keyup", "input", function(event) {	//We only want to listen to the keyup event after a paste event
 	        		var target = event.currentTarget;
-	        		if (($(target).hasClass("formatInput") || $(target).parents(".formatInput:first")) && $(target).data("inputformat") !== undefined) {
+	        		if ($(target).data("inputformat") !== undefined) {
 		                var formatOptions = {
 		                    input: $(target),					//The input that is being formatted
 		                    format: $(target).data("inputformat"),		//The format supplied in the data-inputformat attribute of the DOM element
