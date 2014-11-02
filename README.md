@@ -3,7 +3,7 @@ inputformatter
 
 A JQuery 1.7+ dependent formatting tool for web form input fields - can be used as an extension for [validator.js](https://github.com/mosbymc/validator) or as stand-alone tool.
 
-The wiki for this repo contain the documentation on how to use formatter.js and will be updated as I continue to work on it.
+The wiki for this repo contains the documentation on how to use formatter.js and will be updated as I continue to work on it.
 
 I've committed the initial working version of formatter.js, however, there is still a lot of functionality to be added. The formatter.html file is a test page that I've made to test the functionality of the formatter as I build it. The file form.css should be used with the test page to style it, but is not needed when including the formatter in your own project. Currently the only inputs that are "hooked" into the formatter are the home and cell phone field. Both supply a different format for the field. Feel free to play around with it and try out different formats.
 
