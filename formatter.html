@@ -2,7 +2,7 @@
 	<head>
 		<link rel="stylesheet" href="form.css" />
 		<script src="jquery-1.11.1.js"></script>
-		<script LANGUAGE="javascript" SRC="formatter3.js"></script>
+		<script LANGUAGE="javascript" SRC="formatter.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -33,11 +33,11 @@
 			Feel free to mess around with the formats used in the inputs.
 		</p>
 		<br><br>
-		<fieldset id="fieldValidate1" class="formatInput">
+		<fieldset id="fieldValidate1">
 	    	<legend>Group Validation</legend>
 	      	<dl align='left'>
 	      		<dt><label for='fv1fName'>First Name: </label></dt>
-				<dd><input type='text' id='fv1fName' class="formatInput" data-inputformat="{{ZZZ}}- -{{ZZZZZZ}}"/></dd>
+				<dd><input type='text' id='fv1fName' data-inputformat="{{ZZZ}}- -{{ZZZZZZ}}"/></dd>
 				<dt><label for='fv1lName'>Last Name: </label></dt>
 				<dd><input type='text' id='fv1lName' data-inputformat="{{aaa}}--{{****}}--"/></dd>
 				<dt><label for="fv1homephone">Home Phone: </label></dt>
