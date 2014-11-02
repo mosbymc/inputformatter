@@ -151,8 +151,8 @@ var formatter = function() {
 		return matcher;
 	};
 
-	var getRegexVal = function(char) {	//returns the regex value given a specific character as defined in the data-inputformat attributes
-		switch (char) {
+	var getRegexVal = function(character) {	//returns the regex value given a specific character as defined in the data-inputformat attributes
+		switch (character) {
 			case "#":
 				return "\\d";			//any digit
 			case "d":
@@ -168,7 +168,7 @@ var formatter = function() {
 			case "*":
 				return ".";				//any character at all - wildcard
 			default:
-				return char;
+				return character;
 		}
 	};
 
