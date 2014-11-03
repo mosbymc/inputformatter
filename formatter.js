@@ -85,6 +85,7 @@ var formatter = function() {
 		var charCount = 0;			//where the loop is at in the input value
 		var formattedString = "";	//return value after formatting is added
 		var lastFailed = false;		//used to flag if the last attempted character was not added - we don't want to add more trailing formatting characters if it did
+		var inputAdded = false;
 
 		for (var i = 0; i < stringPattern.length; i++) {
 			if (charCount >= inputVal.length && stringPattern[i].type !== "format") {
@@ -103,15 +104,18 @@ var formatter = function() {
 					formattedString += inputVal[charCount];
 					charCount++;
 					lastFailed = false;
+					inputAdded = true;
 					break;
 				}
 				else if (stringPattern[i].type === "input" && !validChar(i, stringPattern, charCount, inputVal)) {	//If the current type is an "input" and the current inputVal is not a valid character, remove it from the input string
 					charCount++;
 					lastFailed = true;
+					//var tempString = inputVal.substring(0, charCount) + inputVal.substring(charCount+1);
+					//inputVal = tempString;
 				}
 			}
 		}
-		return formattedString;
+		return inputAdded === true ? formattedString : "";	//don't want to return a string that has no input characters in it
 	};
 
 	var validChar = function(patternIndex, stringPattern, inputIndex, inputVal) {
