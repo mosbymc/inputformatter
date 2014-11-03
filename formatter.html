@@ -24,10 +24,19 @@
 	<body>
 		<p>
 			Right now both the "Home Phone" and "Cell Phone" fields are using the formatter to <br>
-			format user input. The are using different formats although both are commonly used <br>
-			for phone numbers. I wanted to test formatter.js using a both a format that started <br> 
+			format user input. They are using different formats although both are commonly used <br>
+			for phone numbers. I wanted to test formatter.js using both a format that started <br> 
 			with user input as the first character, and a format that started with a pattern as <br>
-			 the first character.
+			the first character.
+			<br><br>
+			The "Get Format" button calls the function "formatter().getFormattedInput()". This function<br>
+			takes in two parameters. The first is a format, and the second is the id of an input. The<br>
+			function will take the current value in the field and will return the value reformatted in<br>
+			the newly supplied format. It is currently used on the zip code field.
+			<br><br>
+			The "Remove Formatting" buttons calls the function "formatter().removeFormatting". This<br>
+			function takes in a single parameter: an id of an input field. It will return a the input's<br>
+			value without any formatting applied. It is currently used on the home phone field.
 			<br><br>
 			More will be added to this test page as I continue to fill out the functionality. <br> 
 			Feel free to mess around with the formats used in the inputs.
