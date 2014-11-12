@@ -177,7 +177,7 @@ var formatter = function() {
 	};
 
 	var insertKey = function(options) {		//Inserts the new character to it's position in the string based on cursor position
-		var loc = getInputSelection(options.input[0]),
+		var loc = getInputSelection(options.input[0]);
 		return options.input.val().substring(0, loc.start) + options.key + options.input.val().substring(loc.end, options.input.val().length);
 	};
 	
