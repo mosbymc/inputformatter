@@ -41,18 +41,18 @@ var formatter = function() {
 	this.init = function() {
 		//Normal single key input event listener
 		$(document).on("keypress", "input", function(event) {   //Bind event listener for the keypress event on an input.
-            var target = $(event.currentTarget),
-            code = event.charCode? event.charCode : event.keyCode,
-            key = String.fromCharCode(code);
-            if (target.data("inputformat") !== undefined) {
-                var formatOptions = {
-                    input: target,							//The input that is being formatted
-                    key: key,									//The value of the key that was entered
-                    format: target.data("inputformat"),		//The format supplied in the data-inputformat attribute of the DOM element
-                    event: event
-                };
-                verifyChar(formatOptions);
-            }
+	            var target = $(event.currentTarget),
+	            code = event.charCode? event.charCode : event.keyCode,
+	            key = String.fromCharCode(code);
+	            if (target.data("inputformat") !== undefined) {
+	                var formatOptions = {
+	                    input: target,							//The input that is being formatted
+	                    key: key,									//The value of the key that was entered
+	                    format: target.data("inputformat"),		//The format supplied in the data-inputformat attribute of the DOM element
+	                    event: event
+	                };
+	                verifyChar(formatOptions);
+	          }
         });
 		//Event listener for pasting. The actual paste event does not allow access to the clipboard so during a mouse paste event
 		//you cannot determine what characters are being pasted. I've tried other work arounds with this, but just waiting for the
