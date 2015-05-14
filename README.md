@@ -25,7 +25,7 @@ In the future, I plan on the formatter supporting regex as well as a simplified 
 
 **Pattern Scheme**
 
-'{{' and '}}' - used to delimit areas of user input. The characters below are the valid types that can be specified inside the double brackets to restrict user input. Any special characters inside the double brackets will be treated as a regex value to test the user's input at that location in the string. Anything not inside the double brackets will be treated a a literal value and added to the form input as the user types.
+'{{' and '}}' - used to delimit areas of user input. The characters below are the valid types that can be specified inside the double brackets to restrict user input. Any special characters inside the double brackets will be treated as a regex value to test the user's input at that location in the string*. Anything not inside the double brackets will be treated a a literal value and added to the form input as the user types.
 
 '#' - any single digit
 
@@ -40,3 +40,5 @@ In the future, I plan on the formatter supporting regex as well as a simplified 
 's' - any non-whitespace character
 
 '*' - wildcard; any character
+
+*Note: If you put a character inside the double brackets that is not in the list above, the formatter will treat it as a literal value, meaning the user must type that specific character at that position in the string, all other values will be ignored. Essentially, this would be equivalent to closing the double brackets and putting that same character outside them. The only difference being that in the later case, the formatter would automatically fill that value in for the user.
