@@ -1,7 +1,7 @@
 inputformatter
 ==============
 
-A JQuery 1.7+ dependent formatting tool for web form input fields - can be used as an extension for [validator.js](https://github.com/mosbymc/validator) or as stand-alone tool.
+A JQuery 1.7+ dependent formatting tool for web form input fields - can be used in conjunction with [validator.js](https://github.com/mosbymc/validator) or as stand-alone tool.
 
 The wiki for this repo contains the documentation on how to use formatter.js.
 
