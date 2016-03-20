@@ -1,14 +1,11 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="form.css" />
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script LANGUAGE="javascript" SRC="formatter.js"></script>
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+		<script src="jquery-1.11.1.js"></script>
+		<script LANGUAGE="javascript" SRC="formatter4.js"></script>
 
 		<script type="text/javascript">
-			$(document).ready(function() {
-				formatter().init();
-			});
-
 			function getFormat() {
 				var val = formatter().getFormattedInput("({{###}}) {{###}}-{{####}}", "fv1zip1");
 				alert(val);
