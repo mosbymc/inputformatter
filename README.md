@@ -14,13 +14,13 @@ The formatter was originally concieved to be a part of the code in my other repo
 
 
 The formatter currently works on the keypress and paste events to format input by the user in a text input. To use the formatter, first it must be initialized. To do so, call the init function on the formatter.
-
+```javascript
     formatter().init();
-
+```
 Each input that you want to be formatted needs an attribute called "data-inputformat", the value of which should be set to the format you would like to have. 
-
+```html
     <input type="text" id="fv1homephone" data-inputformat="({{###}}) {{###}}-{{####}}"/>
-
+```
 In the future, I plan on the formatter supporting regex as well as a simplified pattern scheme, but for the time being, it only supports the simply pattern scheme.
 
 **Pattern Scheme**
