@@ -171,9 +171,35 @@ var formatter = (function($) {
 
     function verifyChar(options) {
         var patternArray = buildPatternArray(options.format),	//builds an array for each value in the supplied format string in the data-inputformat value
-            newUserVal = insertKey(options),	//value the user wants to have with the current key inserted into the correct position in the existing string - takes into account a highlight-replace operation
-            cleanedInput = newUserVal.length > 1 ? stripFormatting(patternArray, newUserVal) : newUserVal;
+            newUserVal = insertKey(options);	//value the user wants to have with the current key inserted into the correct position in the existing string - takes into account a highlight-replace operation
 
+        var loc = getInputSelection(options.input[0]);
+        if (loc.start >= patternArray.length) {     //if the cursor is at the end of the input string and the string is already its max length...
+            options.event.preventDefault();         //...prevent default and return - no new characters can be added to the end of the input string
+            return;
+        }
+        if (newUserVal.length >= patternArray.length && loc.end - loc.start < 1) {  //if the cursor is not at the end of the input and no part of the input string is highlighted...
+            if (patternArray[loc.start].type === 'format') {                        //...if the character type at the position of the cursor is a format character...
+                options.event.preventDefault();                                     //...prevent default and return - format characters cannot be replaced
+                return;
+            }
+            if (patternArray[loc.start].type === 'input') {                             //if the character type at the position of the cursor is an input character...
+                var regexVal = new RegExp(getRegexVal(patternArray[loc.start].value));  //...test the character against the allowed character types for that string position
+
+                if (!regexVal.test(options.key)) {                                      //If the regex test fails, prevent default and return - illegal character
+                    options.event.preventDefault();
+                    return;
+                }
+                else {                                                                  //if the regex test succeeds...
+                    var newValue = options.input.val().substring(0, loc.start) + options.key + options.input.val().substring(loc.end + 1, options.input.val().length);
+                    options.input.val(newValue);                                        //...replace the current character at the cursor's position in the string with the new character
+                    options.event.preventDefault();
+                    return;
+                }
+            }
+        }
+
+        var cleanedInput = newUserVal.length > 1 ? stripFormatting(patternArray, newUserVal) : newUserVal;
         formatInput(options, patternArray, cleanedInput);
     }
 
