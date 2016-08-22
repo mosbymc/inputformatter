@@ -13,15 +13,11 @@ The formatter was originally concieved to be a part of the code in my other repo
 # **formatter.js**
 
 
-The formatter currently works on the keypress and paste events to format input by the user in a text input. To use the formatter, first it must be initialized. To do so, call the init function on the formatter.
-```javascript
-    formatter().init();
-```
-Each input that you want to be formatted needs an attribute called "data-inputformat", the value of which should be set to the format you would like to have. 
+The formatter currently works on the keypress and paste events to format input by the user in a text input. Each input that you want to be formatted needs an attribute called "data-inputformat", the value of which should be set to the format you would like to have. 
 ```html
     <input type="text" id="fv1homephone" data-inputformat="({{###}}) {{###}}-{{####}}"/>
 ```
-In the future, I plan on the formatter supporting regex as well as a simplified pattern scheme, but for the time being, it only supports the simply pattern scheme.
+In the future, I plan on the formatter supporting regex as well as a simplified pattern scheme, but for the time being, it only supports the simple pattern scheme.
 
 **Pattern Scheme**
 
@@ -41,4 +37,9 @@ In the future, I plan on the formatter supporting regex as well as a simplified 
 
 '*' - wildcard; any character
 
-*Note: If you put a character inside the double brackets that is not in the list above, the formatter will treat it as a literal value, meaning the user must type that specific character at that position in the string, all other values will be ignored. Essentially, this would be equivalent to closing the double brackets and putting that same character outside them. The only difference being that in the later case, the formatter would automatically fill that value in for the user.
+*Note: If you put a character inside the double brackets that is not in the list above, the formatter will treat it as a literal value, meaning the user must type that specific character at that position in the string, all other values will be ignored. Essentially, this would be equivalent to closing the double brackets and putting that same character outside them. The only difference being that in the later case, the formatter would automatically fill that value in for the user. In other words, for a phone number format, do this:
+{{###}} - {{###}} - {{####}}
+
+Not this:
+{{### - ### - ####}}
+
